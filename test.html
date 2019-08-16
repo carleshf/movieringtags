@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+.chart rect {
+  fill: steelblue;
+}
+
+.chart text {
+  fill: white;
+  font: 10px sans-serif;
+  text-anchor: end;
+}
+
+</style>
+<script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+<body>
+</body>
+<script>
+
+
+var body = d3.select('body');
+var svg = body.append('svg')
+	.attr('width', 400)
+	.attr('height', 400);
+
+
+//Container for the gradients
+var defs = svg.append("defs");
+
+//Filter for the outside glow
+var filter = defs.append("filter")
+    .attr("id","glow");
+filter.append("feGaussianBlur")
+    .attr("stdDeviation","5.5")
+    .attr("result","coloredBlur");
+var feMerge = filter.append("feMerge");
+feMerge.append("feMergeNode")
+    .attr("in","coloredBlur");
+//feMerge.append("feMergeNode")
+//    .attr("in","SourceGraphic");
+
+
+
+svg.append('circle')
+	.attr('cx', 200)
+	.attr('cy', 200)
+	.attr('r', 50)
+	.style("stroke", "none")
+	.style("fill", "blue")
+	.attr('class','class-of-elements')
+	.style("opacity", 0.3);
+
+svg.append('circle')
+	.attr('cx', 200)
+	.attr('cy', 100)
+	.attr('r', 100)
+	.style("stroke", "red")
+	.style("fill", "none"); 
+
+svg.append('circle')
+	.attr('cx', 300)
+	.attr('cy', 200)
+	.attr('r', 100)
+	.style("stroke", "red")
+	.style("fill", "none"); 
+
+svg.append('circle')
+	.attr('cx', 200)
+	.attr('cy', 300)
+	.attr('r', 100)
+	.style("stroke", "red")
+	.style("fill", "none"); 
+
+svg.append('circle')
+	.attr('cx', 100)
+	.attr('cy', 200)
+	.attr('r', 100)
+	.style("stroke", "red")
+	.style("fill", "none"); 
+
+
+/*holder.append("circle")        // attach a circle
+    .attr("cx", 200)           // position the x-centre
+    .attr("cy", 100)           // position the y-centre
+    .attr("r", 50)             // set the radius
+    .style("fill-opacity", .2) // set the fill opacity
+    .style("stroke", "red")    // set the line colour
+    .style("fill", "green");   // set the fill colour
+*/
+
+
+//Apply to your element(s)
+d3.selectAll(".class-of-elements")
+    .style("filter", "url(#glow)");
+
+
+// circleRadii = [40, 20, 10]
+
+// var circles = svg.selectAll('circle')
+// 	.data(circleRadii)
+// 	.enter()
+// 	.append('circle');
+
+// var attrCircle = circles
+// 	.attr('cx', 50)
+// 	.attr('cy', 50)
+// 	.attr('r', function(d) { return d; })
+// 	.style('fill', function(d) {
+// 		if(d === 40) { return 'green'; }
+// 		else if(d == 20 ) { return 'purple'; }
+// 		else{ return 'red'; }
+// 	})
+
+
+
+
+</script>
