@@ -1,30 +1,21 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
 <head>
-    <style>
-
-    .chart rect {
-      fill: steelblue;
-    }
-
-    .chart text {
-      fill: white;
-      font: 10px sans-serif;
-      text-anchor: end;
-    }
-
-    </style>
     <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <script src="data.js" charset="utf-8"></script>
+    <script src="functions.js" charset="utf-8"></script>
 </head>
 <body>
 </body>
 <script>
 
 
+
+
 var body = d3.select('body');
 var svg = body.append('svg')
-	.attr('width', 400)
-	.attr('height', 400);
+	.attr('width', 800)
+	.attr('height', 1000);
 
 
 // //Container for the gradients
@@ -43,175 +34,102 @@ feMerge.append("feMergeNode")
 //    .attr("in","SourceGraphic");
 
 
-function ar_to_xy(angle, radius) {
-    x = radius * Math.sin(Math.PI * 2 * angle / 360);
-    y = radius * Math.cos(Math.PI * 2 * angle / 360);
-    return {'x': x, 'y': y}
-}
 
-function draw_tag(x, y, N, radius) { 
-    var initial = 360 / N;
-    var positions = Array.from({length: N}, (v, k) => ar_to_xy(k * initial, radius));
-
-    var tag = svg.append('g');
-    positions.forEach( pos => {
-        tag.append('g')
-            .attr("transform", "translate(" + x + "," + y + ")")
-            .append('circle')
-                .attr('cx', pos.x)
-                .attr('cy', pos.y)
-                .attr('r', radius)
-                .style("stroke", "black")
-                .style("fill", "none"); 
-    })
-
-    svg.append('circle')
-         .attr('cx', x)
-         .attr('cy', y)
-         .attr('r', radius)
-         .style("stroke", "black")
-         .style("fill", "none"); 
- }
-
- function draw_shadow(x, y, radius, colors) {
-    if (color.length < 4) {
-        colors = colors.concat(Array(4 - colors.length).fill(colors[colors.length - 1]));
-    }
-    radius = 2 * radius / 3;
-    var initial = 360 / colors.length;
-    var positions = Array.from({length: colors.length}, (v, k) => {
-        var pos = ar_to_xy(180 + k * initial, radius);
-        pos.color = colors[k];
-        return pos;
-    });
-    var tag = svg.append('g');
-    positions.forEach( pos => {
-        tag.append('g')
-            .attr("transform", "translate(" + x + "," + y + ")")
-            .append('circle')
-                .attr('cx', pos.x)
-                .attr('cy', pos.y)
-                .attr('r', radius)
-                .style("stroke", "none")
-                .style("fill", pos.color)
-                .attr('class','class-of-elements')
-                .style("fill-opacity", .2);
-    })
-
- }
-
-draw_shadow(50, 50, 15, color = ['red']);
-draw_tag(50, 50, 3, 15);
-
-draw_shadow(150, 50, 15, color = ['red', 'blue']);
-draw_tag(150, 50, 4, 15);
-
-draw_shadow(250, 50, 15, color = ['red', 'red', 'blue']);
-draw_tag(250, 50, 5, 15);
-
-draw_shadow(350, 50, 15, color = ['red', 'yellow', 'blue']);
-draw_tag(350, 50, 6, 15);
-
-draw_shadow(50, 150, 15, color = ['red', 'yellow', 'blue']);
-draw_tag(50, 150, 7, 15);
-
-draw_shadow(150, 150, 15, color = ['red', 'yellow', 'blue']);
-draw_tag(150, 150, 8, 15);
-
-draw_shadow(250, 150, 15, color = ['red', 'green', 'blue', 'yellow']);
-draw_tag(250, 150, 9, 15);
-
-draw_shadow(350, 150, 15, color = ['red', 'green', 'blue', 'yellow', 'green']);
-draw_tag(350, 150, 10, 15);
+var px = 50;
+var py = 50;
+matrix.data.forEach( (movie) => {
+    console.log(px + ' / ' + movie.title)
+    var clr = movie.category.map(category_to_color);
+    console.log(clr);
+    draw_shadow(px, py, 15, color = clr);
+    draw_circles(px, py, 3, 15, movie.title);
+    //draw_line(90, x, 1);
+    // ..
+    px += 100;
+});
 
 
-// ng.attr("transform", "translate(100, 100)")
-// ng.append('circle')
-//      .attr('cx', 0)
-//      .attr('cy', 20)
-//      .attr('r', radius)
-//      .style("stroke", "red")
-//      .style("fill", "none"); 
+var px = 50;
+var py = 150;
+sherlock.data.forEach( (movie) => {
+    console.log(px + ' / ' + movie.title)
+    var clr = movie.category.map(category_to_color);
+    console.log(clr);
+    draw_shadow(px, py, 15, color = clr);
+    draw_circles(px, py, 3, 15, movie.title);
+    //draw_line(90, x, 1);
+    // ..
+    px += 100;
+});
 
-// ng.attr("transform", "translate(100, 100)")
-// ng.append('circle')
-//      .attr('cx', 17.320508075688778)
-//      .attr('cy', -9.999999999999996)
-//      .attr('r', radius)
-//      .style("stroke", "darkgreen")
-//      .style("fill", "none"); 
+
+var px = 50;
+var py = 250;
+lord_of_rigs.data.forEach( (movie) => {
+    console.log(px + ' / ' + movie.title)
+    var clr = movie.category.map(category_to_color);
+    console.log(clr);
+    draw_shadow(px, py, 15, color = clr);
+    draw_circles(px, py, 3, 15, movie.title);
+    //draw_line(90, x, 1);
+    // ..
+    px += 100;
+});
 
 
 
-// svg.append('circle')
-// 	.attr('cx', 200)
-// 	.attr('cy', 200)
-// 	.attr('r', 50)
-// 	.style("stroke", "none")
-// 	.style("fill", "blue")
-// 	.attr('class','class-of-elements')
-// 	.style("opacity", 0.3);
-
-// svg.append('circle')
-// 	.attr('cx', 200)
-// 	.attr('cy', 100)
-// 	.attr('r', 100)
-// 	.style("stroke", "red")
-// 	.style("fill", "none"); 
-
-// svg.append('circle')
-// 	.attr('cx', 300)
-// 	.attr('cy', 200)
-// 	.attr('r', 100)
-// 	.style("stroke", "red")
-// 	.style("fill", "none"); 
-
-// svg.append('circle')
-// 	.attr('cx', 200)
-// 	.attr('cy', 300)
-// 	.attr('r', 100)
-// 	.style("stroke", "red")
-// 	.style("fill", "none"); 
-
-// svg.append('circle')
-// 	.attr('cx', 100)
-// 	.attr('cy', 200)
-// 	.attr('r', 100)
-// 	.style("stroke", "red")
-// 	.style("fill", "none"); 
+var px = 50;
+var py = 350;
+starwars.data.forEach( (movie) => {
+    console.log(px + ' / ' + movie.title)
+    var clr = movie.category.map(category_to_color);
+    console.log(clr);
+    draw_shadow(px, py, 15, color = clr);
+    draw_circles(px, py, 3, 15, movie.title);
+    //draw_line(90, x, 1);
+    // ..
+    px += 100;
+});
 
 
-/*holder.append("circle")        // attach a circle
-    .attr("cx", 200)           // position the x-centre
-    .attr("cy", 100)           // position the y-centre
-    .attr("r", 50)             // set the radius
-    .style("fill-opacity", .2) // set the fill opacity
-    .style("stroke", "red")    // set the line colour
-    .style("fill", "green");   // set the fill colour
-*/
+var px = 50;
+var py = 450;
+back_to_future.data.forEach( (movie) => {
+    console.log(px + ' / ' + movie.title)
+    var clr = movie.category.map(category_to_color);
+    console.log(clr);
+    draw_shadow(px, py, 15, color = clr);
+    draw_circles(px, py, 3, 15, movie.title);
+    //draw_line(90, x, 1);
+    // ..
+    px += 100;
+});
+
+
+
+var px = 50;
+var py = 550;
+die_hard.data.forEach( (movie) => {
+    console.log(px + ' / ' + movie.title)
+    var clr = movie.category.map(category_to_color);
+    console.log(clr);
+    draw_shadow(px, py, 15, color = clr);
+    draw_circles(px, py, 3, 15, movie.title);
+    //draw_line(90, x, 1);
+    // ..
+    px += 100;
+});
+
+
+
+
+
 
 
 //Apply to your element(s)
 d3.selectAll(".class-of-elements")
     .style("filter", "url(#glow)");
 
-
-// circleRadii = [40, 20, 10]
-
-// var circles = svg.selectAll('circle')
-// 	.data(circleRadii)
-// 	.enter()
-// 	.append('circle');
-
-// var attrCircle = circles
-// 	.attr('cx', 50)
-// 	.attr('cy', 50)
-// 	.attr('r', function(d) { return d; })
-// 	.style('fill', function(d) {
-// 		if(d === 40) { return 'green'; }
-// 		else if(d == 20 ) { return 'purple'; }
-// 		else{ return 'red'; }
-// 	})
 
 
 
