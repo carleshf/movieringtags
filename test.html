@@ -37,42 +37,45 @@ feMerge.append("feMergeNode")
 
 var px = 50;
 var py = 50;
-matrix.data.forEach( (movie) => {
+matrix.data.forEach( (movie, idx, array) => {
     console.log(px + ' / ' + movie.title);
     var clr = movie.category.map(category_to_color).filter((color) => 'black');
     console.log(clr);
     draw_shadow(px, py, 15, color = clr);
     draw_circles(px, py, 5, 15, movie.title);
-    //draw_line(90, x, 1);
-    // ..
+    if (idx < array.length - 1) { 
+        draw_line(px + 40, py, 1);
+    }
     px += 100;
 });
 
 
 var px = 50;
 var py = 150;
-sherlock.data.forEach( (movie) => {
+sherlock.data.forEach( (movie, idx, array) => {
     console.log(px + ' / ' + movie.title)
     var clr = movie.category.map(category_to_color);
     console.log(clr);
     draw_shadow(px, py, 15, color = clr);
     draw_circles(px, py, 4, 15, movie.title);
-    //draw_line(90, x, 1);
-    // ..
+    if (idx < array.length - 1) { 
+        draw_line(px + 40, py, 1);
+    }
     px += 100;
 });
 
 
 var px = 50;
 var py = 250;
-lord_of_rigs.data.forEach( (movie) => {
+lord_of_rigs.data.forEach( (movie, idx, array) => {
     console.log(px + ' / ' + movie.title)
     var clr = movie.category.map(category_to_color);
     console.log(clr);
     draw_shadow(px, py, 15, color = clr);
     draw_circles(px, py, 3, 15, movie.title);
-    //draw_line(90, x, 1);
-    // ..
+    if (idx < array.length - 1) { 
+        draw_line(px + 40, py, 1);
+    }
     px += 100;
 });
 
@@ -80,28 +83,30 @@ lord_of_rigs.data.forEach( (movie) => {
 
 var px = 50;
 var py = 350;
-starwars.data.forEach( (movie) => {
+starwars.data.forEach( (movie, idx, array) => {
     console.log(px + ' / ' + movie.title)
     var clr = movie.category.map(category_to_color);
     console.log(clr);
     draw_shadow(px, py, 15, color = clr);
     draw_circles(px, py, 3, 15, movie.title);
-    //draw_line(90, x, 1);
-    // ..
+    if (idx < array.length - 1) { 
+        draw_line(px + 40, py, 1);
+    }
     px += 100;
 });
 
 
 var px = 50;
 var py = 450;
-back_to_future.data.forEach( (movie) => {
+back_to_future.data.forEach( (movie, idx, array) => {
     console.log(px + ' / ' + movie.title)
     var clr = movie.category.map(category_to_color);
     console.log(clr);
     draw_shadow(px, py, 15, color = clr);
     draw_circles(px, py, 3, 15, movie.title);
-    //draw_line(90, x, 1);
-    // ..
+    if (idx < array.length - 1) { 
+        draw_line(px + 40, py, 1);
+    }
     px += 100;
 });
 
@@ -109,14 +114,15 @@ back_to_future.data.forEach( (movie) => {
 
 var px = 50;
 var py = 550;
-die_hard.data.forEach( (movie) => {
+die_hard.data.forEach( (movie, idx, array) => {
     console.log(px + ' / ' + movie.title)
     var clr = movie.category.map(category_to_color);
     console.log(clr);
     draw_shadow(px, py, 15, color = clr);
     draw_circles(px, py, 3, 15, movie.title);
-    //draw_line(90, x, 1);
-    // ..
+    if (idx < array.length - 1) { 
+        draw_line(px + 40, py, 1);
+    }
     px += 100;
 });
 
