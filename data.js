@@ -13,7 +13,7 @@ var sherlock = { 'name': 'Sherlock Holmes', 'date': 'August 17th, 2019',
 var lord_of_rigs = { 'name': 'The Lord of the Right', 'date': 'August 17th, 2019',
     'data': [{ 'title': 'The Fellowship of the Ring', 'release': 2001, 'category': ['Adventure', 'Drama', 'Fantasy'], 'score': 8.8, 'votes': 1526907 },
         { 'title': 'The Two Towers', 'release': 2002, 'category': ['Adventure', 'Drama', 'Fantasy'], 'score': 8.7, 'votes': 1366798 },
-        { 'tite': 'The Return of the King', 'release': 2003, 'category': ['Adventure', 'Drama', 'Fantasy'], 'score': 8.9, 'votes': 1511344}
+        { 'title': 'The Return of the King', 'release': 2003, 'category': ['Adventure', 'Drama', 'Fantasy'], 'score': 8.9, 'votes': 1511344}
 ]};
 
 var starwars = { 'name': 'Star Wars', 'date': 'August 17th, 2019',

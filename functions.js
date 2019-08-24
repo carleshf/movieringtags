@@ -39,8 +39,8 @@ function draw_circles(x, y, N, radius, text) {
 }
 
 function draw_shadow(x, y, radius, colors) {
-    if (color.length < 4) {
-        colors = colors.concat(Array(4 - colors.length).fill(colors[colors.length - 1]));
+    if (color.length < 3) {
+        colors = colors.concat(Array(3 - colors.length).fill(colors[colors.length - 1]));
     }
     radius = 2 * radius / 3;
     var initial = 360 / colors.length;
@@ -49,7 +49,7 @@ function draw_shadow(x, y, radius, colors) {
         pos.color = colors[k];
         return pos;
     });
-    
+
     var tag = svg.append('g');
     positions.forEach( pos => {
         tag.append('g')

@@ -38,11 +38,11 @@ feMerge.append("feMergeNode")
 var px = 50;
 var py = 50;
 matrix.data.forEach( (movie) => {
-    console.log(px + ' / ' + movie.title)
-    var clr = movie.category.map(category_to_color);
+    console.log(px + ' / ' + movie.title);
+    var clr = movie.category.map(category_to_color).filter((color) => 'black');
     console.log(clr);
     draw_shadow(px, py, 15, color = clr);
-    draw_circles(px, py, 3, 15, movie.title);
+    draw_circles(px, py, 5, 15, movie.title);
     //draw_line(90, x, 1);
     // ..
     px += 100;
@@ -56,7 +56,7 @@ sherlock.data.forEach( (movie) => {
     var clr = movie.category.map(category_to_color);
     console.log(clr);
     draw_shadow(px, py, 15, color = clr);
-    draw_circles(px, py, 3, 15, movie.title);
+    draw_circles(px, py, 4, 15, movie.title);
     //draw_line(90, x, 1);
     // ..
     px += 100;
