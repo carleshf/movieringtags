@@ -111,8 +111,18 @@ function draw_line(x, y, N) {
 }
 
 
-function draw_saga(saga) {
-
+function draw_saga(saga, px, py) {
+    saga.data.forEach( (movie, idx, array) => {
+        console.log(px + ' / ' + movie.title);
+        var clr = movie.category.map(category_to_color).filter((color) => 'black');
+        console.log(clr);
+        draw_shadow(px, py, 15, color = clr);
+        draw_circles(px, py, 5, 15, movie.title);
+        if (idx < array.length - 1) { 
+            draw_line(px + 40, py, 1);
+        }
+        px += 100;
+    });
 }
 
 

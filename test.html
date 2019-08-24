@@ -35,96 +35,13 @@ feMerge.append("feMergeNode")
 
 
 
-var px = 50;
-var py = 50;
-matrix.data.forEach( (movie, idx, array) => {
-    console.log(px + ' / ' + movie.title);
-    var clr = movie.category.map(category_to_color).filter((color) => 'black');
-    console.log(clr);
-    draw_shadow(px, py, 15, color = clr);
-    draw_circles(px, py, 5, 15, movie.title);
-    if (idx < array.length - 1) { 
-        draw_line(px + 40, py, 1);
-    }
-    px += 100;
-});
 
-
-var px = 50;
-var py = 150;
-sherlock.data.forEach( (movie, idx, array) => {
-    console.log(px + ' / ' + movie.title)
-    var clr = movie.category.map(category_to_color);
-    console.log(clr);
-    draw_shadow(px, py, 15, color = clr);
-    draw_circles(px, py, 4, 15, movie.title);
-    if (idx < array.length - 1) { 
-        draw_line(px + 40, py, 1);
-    }
-    px += 100;
-});
-
-
-var px = 50;
-var py = 250;
-lord_of_rigs.data.forEach( (movie, idx, array) => {
-    console.log(px + ' / ' + movie.title)
-    var clr = movie.category.map(category_to_color);
-    console.log(clr);
-    draw_shadow(px, py, 15, color = clr);
-    draw_circles(px, py, 3, 15, movie.title);
-    if (idx < array.length - 1) { 
-        draw_line(px + 40, py, 1);
-    }
-    px += 100;
-});
-
-
-
-var px = 50;
-var py = 350;
-starwars.data.forEach( (movie, idx, array) => {
-    console.log(px + ' / ' + movie.title)
-    var clr = movie.category.map(category_to_color);
-    console.log(clr);
-    draw_shadow(px, py, 15, color = clr);
-    draw_circles(px, py, 3, 15, movie.title);
-    if (idx < array.length - 1) { 
-        draw_line(px + 40, py, 1);
-    }
-    px += 100;
-});
-
-
-var px = 50;
-var py = 450;
-back_to_future.data.forEach( (movie, idx, array) => {
-    console.log(px + ' / ' + movie.title)
-    var clr = movie.category.map(category_to_color);
-    console.log(clr);
-    draw_shadow(px, py, 15, color = clr);
-    draw_circles(px, py, 3, 15, movie.title);
-    if (idx < array.length - 1) { 
-        draw_line(px + 40, py, 1);
-    }
-    px += 100;
-});
-
-
-
-var px = 50;
-var py = 550;
-die_hard.data.forEach( (movie, idx, array) => {
-    console.log(px + ' / ' + movie.title)
-    var clr = movie.category.map(category_to_color);
-    console.log(clr);
-    draw_shadow(px, py, 15, color = clr);
-    draw_circles(px, py, 3, 15, movie.title);
-    if (idx < array.length - 1) { 
-        draw_line(px + 40, py, 1);
-    }
-    px += 100;
-});
+draw_saga(matrix, 50, 50);
+draw_saga(sherlock, 50, 150);
+draw_saga(lord_of_rigs, 50, 250);
+draw_saga(starwars, 50, 350);
+draw_saga(back_to_future, 50, 450);
+draw_saga(die_hard, 50, 550)
 
 
 
