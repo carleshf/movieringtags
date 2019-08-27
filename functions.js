@@ -19,11 +19,11 @@ function votes_to_circles(votes) {
 
 function score_to_scale(score, radius) {
     if(score < 7) {
-        return radius * 0.25;
+        return radius * 0.40;
     } else if(score < 7.5) {
-        return radius * 0.50;
+        return radius * 0.55;
     } else if(score < 8.5) {
-        return radius * 0.75;
+        return radius * 0.80;
     } else {
         return radius;
     }
@@ -163,8 +163,8 @@ function draw_legend(px, py) {
     let cat = ['Action', 'Adventure', 'Comedy', 'Crime', 'Drama', 'Fantasy', 'Sci-Fi', 'Thriller'];
     let votes = [{'n': 3, 'caption': 'votes < 4k'}, {'n': 4, 'caption': '4k < votes < 5.5k'}, 
         {'n': 5, 'caption': '5.5k < votes < 10k'}, {'n': 6, 'caption': 'votes > 10k'}];
-    let scores = [{'factor': 0.25, 'caption': 'score < 7'}, {'factor': 0.50, 'caption': '7 < score < 7.5'}, 
-        {'factor': 0.75, 'caption': '5.5k < score < 8.5'}, {'factor': 1, 'caption': 'score > 8.5'}];
+    let scores = [{'factor': 0.40, 'caption': 'score < 7'}, {'factor': 0.55, 'caption': '7 < score < 7.5'}, 
+        {'factor': 0.80, 'caption': '7.5 < score < 8.5'}, {'factor': 1, 'caption': 'score > 8.5'}];
     let cat_tag = leg.append('g');
     let x = px;
     let y = py;
