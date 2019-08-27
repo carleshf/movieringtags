@@ -1,60 +1,73 @@
 <!DOCTYPE html>
-<meta charset="utf-8">
-<head>
-    <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
-    <script src="data.js" charset="utf-8"></script>
-    <script src="functions.js" charset="utf-8"></script>
-</head>
-<body>
-</body>
-<script>
+<html>
+    <meta charset="utf-8">
+    <head>
+        <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+        <script src="data.js" charset="utf-8"></script>
+        <script src="functions.js" charset="utf-8"></script>
+        <link href="https://fonts.googleapis.com/css?family=Aldrich|Arima+Madurai|Arvo|Henny+Penny|Indie+Flower|Libre+Baskerville|Pirata+One|Poiret+One|Sancreek|Satisfy|Share+Tech+Mono|Smokum|Snowburst+One|Special+Elite" rel="stylesheet">
+    </head>
+    <body>
+        <div class="header">
+            <h1>movie ring tags</h1>
+            <div class="description">...</div>
+        </div>
+    </body>
+    <script>
 
 
+    // Get header and prepare SVG for legend
+    var header = d3.select('head');
+
+    // Get body and prepare SVG for sagas
+    var body = d3.select('body');
+    var leg = body.append('svg')
+        .attr('width', 1000)
+        .attr('height', 100);
+    var svg = body.append('svg')
+    	.attr('width', 1000)
+    	.attr('height', 1000);
 
 
-var body = d3.select('body');
-var svg = body.append('svg')
-	.attr('width', 800)
-	.attr('height', 1000);
+    // Container for the gradients
+    var defs = svg.append("defs");
+
+    // Filter for the outside glow
+    var filter = defs.append("filter")
+        .attr("id","glow");
+    filter.append("feGaussianBlur")
+        .attr("stdDeviation","1.5")
+        .attr("result","coloredBlur");
+    var feMerge = filter.append("feMerge");
+    feMerge.append("feMergeNode")
+        .attr("in","coloredBlur");
+    //feMerge.append("feMergeNode")
+    //    .attr("in","SourceGraphic");
 
 
-// //Container for the gradients
-var defs = svg.append("defs");
+    // Draw legend
+    draw_legend(50, 50);
 
-//Filter for the outside glow
-var filter = defs.append("filter")
-    .attr("id","glow");
-filter.append("feGaussianBlur")
-    .attr("stdDeviation","1.5")
-    .attr("result","coloredBlur");
-var feMerge = filter.append("feMerge");
-feMerge.append("feMergeNode")
-    .attr("in","coloredBlur");
-//feMerge.append("feMergeNode")
-//    .attr("in","SourceGraphic");
+    // Initial coordinates for sagas
+    var ix = 100;
+    var iy = 20;
 
-
-
-
-draw_saga(matrix, 50, 50);
-draw_saga(sherlock, 50, 150);
-draw_saga(lord_of_rigs, 50, 250);
-draw_saga(starwars, 50, 350);
-draw_saga(back_to_future, 50, 450);
-draw_saga(die_hard, 50, 550)
+    // Draw sagas
+    var sagas = [matrix, lord_of_rigs, starwars, sherlock, back_to_future, die_hard]
+    sagas.forEach( (saga) => {
+        if(saga.name == "Back to the Future") {
+            draw_saga(saga, ix, iy, 150);
+        } else if(saga.name == "Die Hard") {
+            draw_saga(saga, ix, iy, 125);
+        } else {
+            draw_saga(saga, ix, iy);
+        }
+        iy += 150;
+    })
 
 
-
-
-
-
-
-//Apply to your element(s)
-d3.selectAll(".class-of-elements")
-    .style("filter", "url(#glow)");
-
-
-
-
-
-</script>
+    // Apply to shadow to all elements
+    d3.selectAll(".class-of-elements")
+        .style("filter", "url(#glow)");
+    </script>
+</html>
