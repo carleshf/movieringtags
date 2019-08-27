@@ -7,7 +7,7 @@
         <script src="functions.js" charset="utf-8"></script>
         <link href="https://fonts.googleapis.com/css?family=Aldrich|Arima+Madurai|Arvo|Henny+Penny|Indie+Flower|Libre+Baskerville|Pirata+One|Poiret+One|Sancreek|Satisfy|Share+Tech+Mono|Smokum|Snowburst+One|Special+Elite" rel="stylesheet">
     </head>
-    <body>
+    <body style="text-align:center;">
         <div class="header">
             <h1>movie ring tags</h1>
             <div class="description">...</div>
@@ -22,8 +22,8 @@
     // Get body and prepare SVG for sagas
     var body = d3.select('body');
     var leg = body.append('svg')
-        .attr('width', 1000)
-        .attr('height', 100);
+        .attr('width', 600)
+        .attr('height', 350);
     var svg = body.append('svg')
     	.attr('width', 1000)
     	.attr('height', 1000);
@@ -46,7 +46,7 @@
 
 
     // Draw legend
-    draw_legend(50, 50);
+    draw_legend(50, 30);
 
     // Initial coordinates for sagas
     var ix = 100;

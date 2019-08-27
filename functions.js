@@ -5,55 +5,79 @@ function ar_to_xy(angle, radius) {
     return {'x': x, 'y': y}
 };
 
-function draw_circles(x, y, N, radius, text) { 
-    var initial = 360 / N;
-    var positions = Array.from({length: N}, (v, k) => ar_to_xy(k * initial, radius));
+function votes_to_circles(votes) {
+    if(votes <= 400000) {
+        return 3;
+    } else if(votes <= 550000) {
+        return 4;
+    } else if(votes <= 1000000) {
+        return 5;
+    } else {
+        return 6;
+    }
+}
 
-    var tag = svg.append('g');
-    positions.forEach( pos => {
+function score_to_scale(score, radius) {
+    if(score < 7) {
+        return radius * 0.25;
+    } else if(score < 7.5) {
+        return radius * 0.50;
+    } else if(score < 8.5) {
+        return radius * 0.75;
+    } else {
+        return radius;
+    }
+}
+
+function draw_circles(mst, x, y, N, radius, text, sz="8.5px") { 
+    let initial = 360 / N;
+    let positions = Array.from({length: N}, (v, k) => ar_to_xy(k * initial, radius));
+
+    let tag = mst.append('g');
+    positions.forEach( (pos) => {
         tag.append('g')
             .attr("transform", "translate(" + x + "," + y + ")")
             .append('circle')
                 .attr('cx', pos.x)
                 .attr('cy', pos.y)
                 .attr('r', radius)
-                .style("stroke", "black")
-                .style("fill", "none"); 
+                .style("stroke", "dimgray")
+                .style("fill", "none");
     });
 
     tag.append('circle')
          .attr('cx', x)
          .attr('cy', y)
          .attr('r', radius)
-         .style("stroke", "black")
+         .style("stroke", "dimgray")
          .style("fill", "none"); 
 
-    svg.append('text')
+    mst.append('text')
         .attr("x", x)
         .attr("y", y + 50)
         //.attr("font-family", "Helvetica Neue")
         .attr("font-family", "Share Tech Mono")
-        .attr("font-size", "8.5px")
+        .attr("font-size", sz)
         .attr("text-anchor", "middle")
         .attr("fill", "black")
         .text(text);
 }
 
-function draw_shadow(x, y, radius, colors) {
-    if (color.length < 3) {
+function draw_shadow(mst, x, y, radius, colors) {
+    /*if (color.length < 3) {
         colors = colors.concat(Array(3 - colors.length).fill(colors[colors.length - 1]));
-    }
-    var radius_for_center = 2 * radius / 3;
-    var radius_for_shadorw = radius * 1.45;
-    var initial = 360 / colors.length;
-    var positions = Array.from({length: colors.length}, (v, k) => {
-        var pos = ar_to_xy(180 + k * initial, radius_for_center);
+    }*/
+    let radius_for_center = 2 * radius / 3;
+    let radius_for_shadorw = radius * 1.45;
+    let initial = 360 / colors.length;
+    let positions = Array.from({length: colors.length}, (v, k) => {
+        let pos = ar_to_xy(180 + k * initial, radius_for_center);
         pos.color = colors[k];
         return pos;
     });
 
-    var tag = svg.append('g');
-    positions.forEach( pos => {
+    let tag = mst.append('g');
+    positions.forEach( (pos) => {
         tag.append('g')
             .attr("transform", "translate(" + x + "," + y + ")")
             .append('circle')
@@ -99,8 +123,8 @@ function category_to_color(category) {
     }
 };
 
-function draw_line(x, y, N, length = 50) {
-    var tag = svg.append('g');
+function draw_line(mst, x, y, N, length = 50) {
+    let tag = mst.append('g');
     tag.append('g')
         .attr("transform", "translate(" + x + "," + y + ")")
         .append('line')
@@ -108,13 +132,12 @@ function draw_line(x, y, N, length = 50) {
             .attr('x2', length)
             .attr('y1', 0)
             .attr('y2', 0)
-            .style("stroke", "black")
+            .style("stroke", "dimgray")
             .style("stroke-width", "1");
 }
 
 
 function draw_saga(saga, px, py, gap = 105) {
-
     svg.append('text')
         .attr("x", px / 2)
         .attr("y", py)
@@ -124,49 +147,68 @@ function draw_saga(saga, px, py, gap = 105) {
         .attr("fill", "black")
         .text(saga.name);
 
-    //px += 100;
     py += 50;
     saga.data.forEach( (movie, idx, array) => {
-        console.log(px + ' / ' + movie.title);
-        var clr = movie.category.map(category_to_color).filter((color) => 'black');
-        console.log(clr);
-        draw_shadow(px, py, 15, color = clr);
-        draw_circles(px, py, 5, 15, movie.title);
+        let clr = movie.category.map(category_to_color).filter((color) => 'black');
+        draw_shadow(svg, px, py, score_to_scale(movie.score, 15), color = clr);
+        draw_circles(svg, px, py, votes_to_circles(movie.votes), score_to_scale(movie.score, 15), movie.title);
         if (idx < array.length - 1) { 
-            draw_line(px + 40, py, 1, gap - 30 - 50);
+            draw_line(svg, px + 40, py, 1, gap - 30 - 50);
         }
         px += gap;
     });
 }
 
 function draw_legend(px, py) {
-    cat = ['Action', 'Adventure', 'Comedy', 'Crime', 'Drama', 'Fantasy', 'Sci-Fi', 'Thriller'];
-    var cat_tag = leg.append('g');
-    x = px;
-    cat.forEach( (cat) => {
+    let cat = ['Action', 'Adventure', 'Comedy', 'Crime', 'Drama', 'Fantasy', 'Sci-Fi', 'Thriller'];
+    let votes = [{'n': 3, 'caption': 'votes < 4k'}, {'n': 4, 'caption': '4k < votes < 5.5k'}, 
+        {'n': 5, 'caption': '5.5k < votes < 10k'}, {'n': 6, 'caption': 'votes > 10k'}];
+    let scores = [{'factor': 0.25, 'caption': 'score < 7'}, {'factor': 0.50, 'caption': '7 < score < 7.5'}, 
+        {'factor': 0.75, 'caption': '5.5k < score < 8.5'}, {'factor': 1, 'caption': 'score > 8.5'}];
+    let cat_tag = leg.append('g');
+    let x = px;
+    let y = py;
+    cat.forEach( (cat, idx, array) => {
         clr = category_to_color(cat);
         cat_tag.append('g')
-            //.attr("transform", "translate(" + x + "," + y + ")")
             .append('circle')
                 .attr('cx', x)
-                .attr('cy', py)
+                .attr('cy', y)
                 .attr('r', 20)
                 .style("stroke", "none")
                 .style("fill", clr)
                 .attr('class','class-of-elements')
                 .style("fill-opacity", .2);
-
+        
         leg.append('text')
             .attr("x", x)
-            .attr("y", py + 40)
+            .attr("y", y + 40)
             .attr("font-family", "Share Tech Mono")
-            .attr("font-size", "13px")
+            .attr("font-size", "11px")
             .attr("text-anchor", "middle")
             .attr("fill", "black")
             .text(cat);
 
-        x += 75;
+        x += 65;
     });
+
+    x = px + px / 2;
+    y += 100;
+    votes.forEach( (vote, idx, array) => {
+        draw_circles(leg, x, y, vote.n, 15, vote.caption, sz="11px");
+        x += 65 * 2;
+    });
+
+    x = px + px / 2;
+    y += 100;
+    scores.forEach( (score, idx, array) => {
+        draw_circles(leg, x, y, 3, score.factor * 15, score.caption, sz="11px");
+        x += 65 * 2;
+    });
+
+
+    //score_to_scale
+    //.attr('transform', 'scale(' + 2 + ')')
 }
 
 
