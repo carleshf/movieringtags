@@ -42,5 +42,17 @@ var die_hard = { 'name': 'Die Hard', 'date': 'August 17th, 2019',
 
 ]};
 
+var stepup = { 'name': 'Step Up', 'date': 'August 28th, 2019',
+    'data': [{ 'title': 'Step Up ', 'release': 2006, 'category': ['Crime', 'Drama', 'Music'], 'score': 6.5, 'votes': 105077 },
+        { 'title': 'Step Up 2: The Streets', 'release': 2008, 'category': ['Drama', 'Music', 'Romance'], 'score': 6.2, 'votes': 76549 },
+        { 'title': 'Step Up 3D', 'release': 2010, 'category': ['Drama', 'Music', 'Romance'], 'score': 6.2, 'votes': 53427 },
+        { 'title': 'Step Up Revolution', 'release': 2012, 'category': ['Drama', 'Music', 'Romance'], 'score': 6.4, 'votes': 51609 },
+        { 'title': 'Step Up All In', 'release': 2014, 'category': ['Drama', 'Music', 'Romance'], 'score': 6.0, 'votes': 30694 }
+]};
 
 
+var pitchperfect = { 'name': 'Pitch Perfect', 'date': 'August 28th, 2019',
+    'data': [{ 'title': 'Pitch Perfect ', 'release': 2006, 'category': ['Comedy', 'Music', 'Romance'], 'score': 7.2, 'votes': 259173 },
+        { 'title': 'Pitch Perfect 2', 'release': 2008, 'category': ['Comedy', 'Music'], 'score': 6.4, 'votes': 132261 },
+        { 'title': 'Pitch Perfect 3', 'release': 2010, 'category': ['Comedy', 'Music'], 'score': 5.8, 'votes': 46631 },
+]};

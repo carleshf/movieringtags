@@ -6,13 +6,35 @@
         <script src="data.js" charset="utf-8"></script>
         <script src="functions.js" charset="utf-8"></script>
         <link href="https://fonts.googleapis.com/css?family=Aldrich|Arima+Madurai|Arvo|Henny+Penny|Indie+Flower|Libre+Baskerville|Pirata+One|Poiret+One|Sancreek|Satisfy|Share+Tech+Mono|Smokum|Snowburst+One|Special+Elite" rel="stylesheet">
+        <style type="text/css">
+            h1 {
+                font-family: "Share Tech Mono";
+                font-size: 29px; 
+            }
+            p {
+                font-family: "Share Tech Mono";
+                font-size: 12px;
+                width: 600px;
+                margin: auto;
+            }
+        </style>
     </head>
     <body style="text-align:center;">
-        <div class="header">
-            <h1>movie ring tags</h1>
-            <div class="description">
-                Inspired by Shirley Wu's (<a href="https://twitter.com/sxywu" target="_blank">twitter</a> - <a href="https://www.instagram.com/sxywu/" target="_blank">instagram</a>) <a href="http://bl.ocks.org/sxywu/raw/d612c6c653fb8b4d7ff3d422be164a5d/" target="_blank">film flowers</a> I created the <im>movie ring tags</im> as a data visualization experiment about some of my favourite movie sagas.
+        <div>
+            <h1 style="margin-bottom: 40px;">movie ring tags</h1>
+            <div>
+                <p style="margin-bottom: 10px;">Inspired by Shirley Wu's (<a href="https://twitter.com/sxywu" target="_blank">twitter</a> - <a href="https://www.instagram.com/sxywu/" target="_blank">instagram</a>) <a href="http://bl.ocks.org/sxywu/raw/d612c6c653fb8b4d7ff3d422be164a5d/" target="_blank">film flowers</a>, I created the <em>movie ring tags</em> as a data visualization experiment about some of my favourite movie sagas.</p>
+                <p>The following legend indicates how to read the <em>movie ring tags</em> that consists in a series of circles with a coloured shadow.</p>
             </div>
+        </div>
+        <div>
+            <svg id="legend" width="550" height="350">
+               <!-- <rect width="550" height="350" style="fill:rgb(0,0,255);stroke-width:10;stroke:rgb(0,0,0)" /> -->
+            </svg>
+            <p>The sagas I selected for this experiment are: <a href="https://www.imdb.com/list/ls061622168/" target="_blank">The Matrix</a>, <a href="https://www.imdb.com/list/ls072068350/" target="_blank">The Lord of the Rings</a>, <a href="https://www.imdb.com/list/ls070150896/" target="_blank">Star Wars</a>, <a href="https://www.imdb.com/list/ls059932117/" target="_blank">Sherlock Holmes</a>, <a href="https://www.imdb.com/list/ls031149463/" target="_blank">Back to the Future</a>, and <a href="https://www.imdb.com/list/ls057313912/" target="_blank">Die Hard</a>. I also included some musicals as <a href="https://www.imdb.com/list/ls079539839/" target="_blank">Step Up</a>, and <a href="https://www.imdb.com/list/ls023218635/" target="_blank">Pitch Perfect</a>, courtesy of my wife. I collected the information for each movie between August 17th and 28th (2019), from IMDb (Internet Movie Database).</p>
+            <svg id="sagas" width="925" height="1250">
+                <!-- <rect width="925" height="1250" style="fill:rgb(255,0,0);stroke-width:10;stroke:rgb(0,0,0)" /> -->
+            </svg>
         </div>
     </body>
     <script>
@@ -23,12 +45,12 @@
 
     // Get body and prepare SVG for sagas
     var body = d3.select('body');
-    var leg = body.append('svg')
-        .attr('width', 600)
-        .attr('height', 350);
-    var svg = body.append('svg')
-    	.attr('width', 1000)
-    	.attr('height', 1000);
+    var leg = body.select('#legend');
+        //.attr('width', 600)
+        //.attr('height', 350);
+    var svg = body.select('#sagas');
+    	//.attr('width', 1000)
+    	//.attr('height', 1000);
 
 
     // Container for the gradients
@@ -48,14 +70,14 @@
 
 
     // Draw legend
-    draw_legend(50, 30);
+    draw_legend(50, 50);
 
     // Initial coordinates for sagas
     var ix = 100;
-    var iy = 20;
+    var iy = 50;
 
     // Draw sagas
-    var sagas = [matrix, lord_of_rigs, starwars, sherlock, back_to_future, die_hard]
+    var sagas = [matrix, lord_of_rigs, starwars, sherlock, back_to_future, die_hard, stepup, pitchperfect]
     sagas.forEach( (saga) => {
         if(saga.name == "Back to the Future") {
             draw_saga(saga, ix, iy, 150);

@@ -6,11 +6,11 @@ function ar_to_xy(angle, radius) {
 };
 
 function votes_to_circles(votes) {
-    if(votes <= 400000) {
+    if(votes <= 258147) {
         return 3;
-    } else if(votes <= 550000) {
+    } else if(votes <= 470434) {
         return 4;
-    } else if(votes <= 1000000) {
+    } else if(votes <= 726970) {
         return 5;
     } else {
         return 6;
@@ -18,11 +18,11 @@ function votes_to_circles(votes) {
 }
 
 function score_to_scale(score, radius) {
-    if(score < 7) {
-        return radius * 0.40;
-    } else if(score < 7.5) {
+    if(score <= 6.50) { 
+        return radius * 0.30;
+    } else if(score <= 7.2) {
         return radius * 0.55;
-    } else if(score < 8.5) {
+    } else if(score <= 8.30) {
         return radius * 0.80;
     } else {
         return radius;
@@ -98,12 +98,15 @@ function category_to_color(category) {
             return 'orange';
             break;
         case 'Adventure':
-            return 'yellow';
+            return 'orange';
             break;
-        case 'Comedy':
+        case 'Action/Adventure':
+            return 'orange';
+            break;
+        case 'Romance':
             return 'pink';
             break;
-        case 'Crime':
+        case 'Comedy':
             return 'red';
             break;
         case 'Drama':
@@ -117,6 +120,15 @@ function category_to_color(category) {
             break;
         case 'Thriller':
             return 'grey';
+            break;
+        case 'Crime':
+            return 'grey';
+            break;
+        case 'Crime/Thriller':
+            return 'grey';
+            break;
+        case 'Music':
+            return 'yellow';
             break;
         default:
             return 'black';
@@ -160,11 +172,11 @@ function draw_saga(saga, px, py, gap = 105) {
 }
 
 function draw_legend(px, py) {
-    let cat = ['Action', 'Adventure', 'Comedy', 'Crime', 'Drama', 'Fantasy', 'Sci-Fi', 'Thriller'];
-    let votes = [{'n': 3, 'caption': 'votes < 4k'}, {'n': 4, 'caption': '4k < votes < 5.5k'}, 
-        {'n': 5, 'caption': '5.5k < votes < 10k'}, {'n': 6, 'caption': 'votes > 10k'}];
-    let scores = [{'factor': 0.40, 'caption': 'score < 7'}, {'factor': 0.55, 'caption': '7 < score < 7.5'}, 
-        {'factor': 0.80, 'caption': '7.5 < score < 8.5'}, {'factor': 1, 'caption': 'score > 8.5'}];
+    let cat = ['Music', 'Action/Adventure', 'Romance', 'Comedy', 'Fantasy', 'Drama', 'Sci-Fi', 'Crime/Thriller'];
+    let votes = [{'n': 3, 'caption': 'votes < 2.6k'}, {'n': 4, 'caption': '2.6k < votes < 4.7k'}, 
+        {'n': 5, 'caption': '4.7k < votes < 7.2k'}, {'n': 6, 'caption': 'votes > 7.2k'}];
+    let scores = [{'factor': 0.40, 'caption': 'score < 6.5'}, {'factor': 0.55, 'caption': '6.5 < score < 7.2'}, 
+        {'factor': 0.80, 'caption': '7.2 < score < 8.3'}, {'factor': 1, 'caption': 'score > 8.3'}];
     let cat_tag = leg.append('g');
     let x = px;
     let y = py;
@@ -184,7 +196,7 @@ function draw_legend(px, py) {
             .attr("x", x)
             .attr("y", y + 40)
             .attr("font-family", "Share Tech Mono")
-            .attr("font-size", "11px")
+            .attr("font-size", "10px")
             .attr("text-anchor", "middle")
             .attr("fill", "black")
             .text(cat);
@@ -195,20 +207,16 @@ function draw_legend(px, py) {
     x = px + px / 2;
     y += 100;
     votes.forEach( (vote, idx, array) => {
-        draw_circles(leg, x, y, vote.n, 15, vote.caption, sz="11px");
+        draw_circles(leg, x, y, vote.n, 15, vote.caption, sz="10px");
         x += 65 * 2;
     });
 
     x = px + px / 2;
     y += 100;
     scores.forEach( (score, idx, array) => {
-        draw_circles(leg, x, y, 3, score.factor * 15, score.caption, sz="11px");
+        draw_circles(leg, x, y, 3, score.factor * 15, score.caption, sz="10px");
         x += 65 * 2;
     });
-
-
-    //score_to_scale
-    //.attr('transform', 'scale(' + 2 + ')')
 }
 
 
