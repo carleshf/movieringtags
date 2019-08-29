@@ -29,7 +29,7 @@ function score_to_scale(score, radius) {
     }
 }
 
-function draw_circles(mst, x, y, N, radius, text, sz="8.5px") { 
+function draw_circles(mst, x, y, N, radius, title, release, sz="8.5px") { 
     let initial = 360 / N;
     let positions = Array.from({length: N}, (v, k) => ar_to_xy(k * initial, radius));
 
@@ -60,7 +60,19 @@ function draw_circles(mst, x, y, N, radius, text, sz="8.5px") {
         .attr("font-size", sz)
         .attr("text-anchor", "middle")
         .attr("fill", "black")
-        .text(text);
+        .text(title);
+
+    if( release != '') {
+        mst.append('text')
+            .attr("x", x)
+            .attr("y", y + 65)
+            //.attr("font-family", "Helvetica Neue")
+            .attr("font-family", "Share Tech Mono")
+            .attr("font-size", sz)
+            .attr("text-anchor", "middle")
+            .attr("fill", "black")
+            .text('(' + release + ')');
+    }
 }
 
 function draw_shadow(mst, x, y, radius, colors) {
@@ -163,7 +175,7 @@ function draw_saga(saga, px, py, gap = 105) {
     saga.data.forEach( (movie, idx, array) => {
         let clr = movie.category.map(category_to_color).filter((color) => 'black');
         draw_shadow(svg, px, py, score_to_scale(movie.score, 15), color = clr);
-        draw_circles(svg, px, py, votes_to_circles(movie.votes), score_to_scale(movie.score, 15), movie.title);
+        draw_circles(svg, px, py, votes_to_circles(movie.votes), score_to_scale(movie.score, 15), movie.title, movie.release);
         if (idx < array.length - 1) { 
             draw_line(svg, px + 40, py, 1, gap - 30 - 50);
         }
@@ -207,14 +219,14 @@ function draw_legend(px, py) {
     x = px + px / 2;
     y += 100;
     votes.forEach( (vote, idx, array) => {
-        draw_circles(leg, x, y, vote.n, 15, vote.caption, sz="10px");
+        draw_circles(leg, x, y, vote.n, 15, vote.caption, '', sz="10px");
         x += 65 * 2;
     });
 
     x = px + px / 2;
     y += 100;
     scores.forEach( (score, idx, array) => {
-        draw_circles(leg, x, y, 3, score.factor * 15, score.caption, sz="10px");
+        draw_circles(leg, x, y, 3, score.factor * 15, '', score.caption, sz="10px");
         x += 65 * 2;
     });
 }
